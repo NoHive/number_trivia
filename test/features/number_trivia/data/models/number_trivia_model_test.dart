@@ -32,11 +32,42 @@ void main(){
         final Map<String, dynamic> jsonMap = 
           json.decode(fixture('trivia.json'));
         // act
-    
+        final result = NumberTriviaModel.fromJson(jsonMap);
         //assert
+        expect(result, equals(tNumberTriviaModel));
     
         }
     );
+    test(
+      'should return a valid model when the JSON number is regarded as a double',
+        () async {
+        // arrange
+        final Map<String, dynamic> jsonMap = 
+          json.decode(fixture('trivia_double.json'));
+        // act
+        final result = NumberTriviaModel.fromJson(jsonMap);
+        //assert
+        expect(result, equals(tNumberTriviaModel));
+    
+        }
+    );
+  });
+  group('toJson', (){
+    test(
+      'should return a JSON Map whih proper data',
+        () async {
+        // arrange
+    
+        // act
+        final result = tNumberTriviaModel.toJson();
+    
+        //assert
+        final expectedMap = {'text':'test', 'number':1};
+        expect(result, equals(expectedMap));
+    
+        }
+    );
+
   });
 
 }
