@@ -37,7 +37,7 @@ class NumberTriviaRepositoryImpl implements NumberTriviaReporitory{
     if(await networkInfo.isConnected){
       try{
         final remoteTrivia = await getConcreteOrRandom();
-        localDataSource.cacheNumberTrvia(remoteTrivia);
+        localDataSource.cacheNumberTrivia(remoteTrivia);
         return  Right(remoteTrivia);
       } on ServerException{
         return Left(ServerFailure());

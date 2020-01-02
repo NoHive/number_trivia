@@ -96,7 +96,7 @@ void main(){
           await repository.getConcreteNumberTrivia(tNumber);
           //assert
           verify(mockRemoteDataSource.getConcreteNumberTrivia(tNumber));
-          verify(mockLocalDataSource.cacheNumberTrvia(tNumberTriviaModel));
+          verify(mockLocalDataSource.cacheNumberTrivia(tNumberTriviaModel));
       
           }
       );
@@ -200,7 +200,7 @@ void main(){
           await repository.getRandomNumberTrivia();
           //assert
           verify(mockRemoteDataSource.getRandomNumberTrivia());
-          verify(mockLocalDataSource.cacheNumberTrvia(tNumberTriviaModel));
+          verify(mockLocalDataSource.cacheNumberTrivia(tNumberTriviaModel));
       
           }
       );
