@@ -13,6 +13,7 @@ abstract class NumberTriviaRemoteDataSource{
     /// throws a [ServerException] for all error codes
     Future <NumberTriviaModel> getRandomNumberTrivia();
 }
+const NUMBERS_API_BASE_URL = 'http://numbersapi/';
 
 class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource{
   
@@ -20,22 +21,24 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource{
 
   NumberTriviaRemoteDataSourceImpl({@required this.client}); 
   
-  @override
-  Future<NumberTriviaModel> getConcreteNumberTrivia(int number) async{
-    // TODO: implement getConcreteNumberTrivia
-    
-      final resonse = await client.get('http://numbersapi/$number', headers: {'Content-Type':'application/json'} );
+  Future<NumberTriviaModel> _getRemoteTrivia(String endpoint) async{
+    final resonse = await client.get(endpoint, headers: {'Content-Type':'application/json'} );
       if(resonse.statusCode != 200){
         throw ServerException();
       }else{
         return NumberTriviaModel.fromJson(json.decode(resonse.body));
       }
-    
+  }
+
+  
+
+  @override
+  Future<NumberTriviaModel> getConcreteNumberTrivia(int number) async{
+      return _getRemoteTrivia(NUMBERS_API_BASE_URL+number.toString());
   }
 
   @override
-  Future<NumberTriviaModel> getRandomNumberTrivia() {
-    // TODO: implement getRandomNumberTrivia
-    return null;
+  Future<NumberTriviaModel> getRandomNumberTrivia() async {
+   return _getRemoteTrivia(NUMBERS_API_BASE_URL+'random');
   }
 }

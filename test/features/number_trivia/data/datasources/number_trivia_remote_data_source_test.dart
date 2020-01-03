@@ -71,4 +71,41 @@ void main(){
     );
 
   });
+  group("getRandomNumberTrivia", (){
+    final tNumber = 1;
+    test(
+      'should perform Get request on a URL with number being the endpoint and with application/json header',
+        () async {
+        // arrange
+        setUpMockHttp200Sucess();
+        // act
+        datasouce.getRandomNumberTrivia();
+        //assert
+        verify(mockHttpClient.get('http://numbersapi/random', headers: {'Content-Type':'application/json'} ));
+        
+    
+        }
+    );
+    test(
+      'should return NumberTrivia if the response code is 200',
+        () async {
+        setUpMockHttp200Sucess();
+        // act
+        NumberTrivia result = await datasouce.getRandomNumberTrivia();
+        //assert
+        expect(result, tNumberTriviaModel);
+        }
+    );
+     test(
+      'should return ServerException if the response code is not 200',
+        () async {
+          setUpMockHttp404Failure();
+        // act
+          final call = datasouce.getRandomNumberTrivia;
+        //assert
+          expect(()=> call(), throwsA(TypeMatcher<ServerException>()));
+        }
+    );
+
+  });
 }
